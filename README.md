@@ -2,7 +2,7 @@
 
 1. There are four roles:
 
-    The owner: who can add, delete, filtering, change, show and delete the mobiles and he can add a sellers
+    The owner: who can add, delete, filtering, update, show and delete the mobiles and he can add a sellers
 
     The seller: who can show and filtering the mobiles, and make inactive for mobiles
     

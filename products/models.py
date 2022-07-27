@@ -7,7 +7,8 @@ from products.managers import MobileManager
 
 class Category(models.Model):
     name = models.CharField(max_length=20)
-    categories = models.ManyToManyField("self", null=True, blank=True)
+    parent = models.ForeignKey('self', default=None, null=True, blank=True, related_name='nested_category',
+                               on_delete=models.CASCADE)
 
     def __str__(self):
         return self.name

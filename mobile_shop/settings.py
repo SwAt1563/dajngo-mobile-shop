@@ -37,7 +37,6 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'products.apps.ProductsConfig',
-    'dashboard.apps.DashboardConfig',
     'users.apps.UsersConfig',
 ]
 
@@ -110,7 +109,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'IST'
+TIME_ZONE = 'UTC'
 
 USE_I18N = True
 
@@ -129,5 +128,6 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+# AUTH_USER_MODEL = 'users.UserAccount'
 # LOGIN_REDIRECT_URL = "products"
 # LOGOUT_REDIRECT_URL = "products"
