@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 from .managers import OwnerManager
 from .managers import SellerManager
 from .managers import CustomerManager
-from django.urls import reverse
+
 
 # Create your models here.
 
@@ -13,9 +13,6 @@ class UserAccount(User):
     is_superuser = False
     is_active = False
     is_staff = False
-    is_owner = False
-    is_seller = False
-    is_customer = False
 
     class Types(models.TextChoices):
         OWNER = "OWNER", "Owner"
@@ -25,15 +22,15 @@ class UserAccount(User):
     type = models.CharField(max_length=15, choices=Types.choices,
                             default=Types.CUSTOMER)
 
-    # There is email and username by default
+    # There is email and username and other field by default
+    # but at least you should fill the username and the password
 
 
 class Owner(UserAccount):
-    is_owner = True
     objects = OwnerManager()
 
     class Meta:
-        proxy = True  # For don't create new table, and use the User table
+        proxy = False  # IF TRUE: then don't create new table, and use the User table
         permissions = [
             ("add_mobile", "add mobile"),
             ("delete_mobile", "delete mobile"),
@@ -52,11 +49,12 @@ class Owner(UserAccount):
 
 
 class Seller(UserAccount):
-    is_seller = True
+
     objects = SellerManager()
+    mobiles = models.ManyToManyField(to='products.Mobile', blank=True, default=None)
 
     class Meta:
-        proxy = True
+        proxy = False
         permissions = [
             ("show_mobile", "show mobile"),
             ("inactive_mobile", "inactive mobile"),
@@ -69,15 +67,22 @@ class Seller(UserAccount):
 
 
 class Customer(UserAccount):
-    is_customer = True
+
     objects = CustomerManager()
+    purchases = models.ManyToManyField(to='products.Mobile', blank=True, default=None)
+    wallet = models.FloatField(default=1000.0)
 
     class Meta:
-        proxy = True
+        proxy = False
         permissions = [
             ("buy_mobile", "buy mobile"),
             ("show_mobile", "show mobile"),
         ]
+
+    def buy_mobile(self, mobile):
+        self.wallet -= mobile.price
+        self.purchases.add(mobile)
+        self.save()
 
     def save(self, *args, **kwargs):
         if not self.pk:

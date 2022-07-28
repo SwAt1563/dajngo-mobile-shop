@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+<head>
+    <meta charset="UTF-8">
+    <title>Mobiles Home</title>
+    <link rel="stylesheet" href="{% static 'products/website.css' %}">
+</head>
+<body>
+<header><h1>Home Page</h1></header>
+<main>
+{% for mobile in page_obj %}
+
+
+    <div class="container">
+    <a href="{% url 'products:mobile' mobile.id %}">
+    <h2>{{ mobile.name|upper }}</h2>
+    <h4>Price: {{ mobile.price }}</h4>
+    <h4>Amount: {{ mobile.amount }}</h4>
+    <h4>Category: {{ mobile.category.name }}</h4>
+    <img src="{{ mobile.mobile_image.url }}" alt="{{ mobile.name }}"/>
+
+
+    </a>
+    </div>
+
+{% endfor %}
+</main>
+<footer>
+<div class="pagination">
+    <span class="step-links">
+        {% if page_obj.has_previous %}
+            <a href="?page=1">&laquo; first</a>
+            <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+        </span>
+
+        {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}">next</a>
+            <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+        {% endif %}
+    </span>
+</div>
+</footer>
+</body>
+</html>

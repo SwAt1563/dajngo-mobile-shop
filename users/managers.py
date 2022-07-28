@@ -15,6 +15,9 @@ class SellerManager(UserManager):
         from .models import UserAccount
         return super().get_queryset().filter(type=UserAccount.Types.SELLER)
 
+    def add_mobile(self, seller, mobile):
+        self.get(seller).mobiles.add(mobile)
+
 
 class CustomerManager(UserManager):
 
