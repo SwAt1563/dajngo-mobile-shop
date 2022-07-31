@@ -21,7 +21,8 @@ class Category(models.Model):
         if self.nested_category.exists():
             current_mobiles = self.mobile_set.all()
             for children in self.nested_category.all():
-                current_mobiles.union(children.get_mobiles_based_on_category())
+                current_mobiles = current_mobiles.union(children.get_mobiles_based_on_category())
+
             return current_mobiles
         return self.mobile_set.all().filter(is_active=True)
 

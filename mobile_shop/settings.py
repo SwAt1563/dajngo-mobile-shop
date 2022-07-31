@@ -82,6 +82,7 @@ DATABASES = {
         'USER': 'sqbybeaj',
         'PASSWORD': '6P2pgLxnlqL_AHphmmQFPbBqItZLBclq',
         'PORT': '5432',
+        'CONN_MAX_AGE ': 10,  # the time in second for each connection
 
     }
 }

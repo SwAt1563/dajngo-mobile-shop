@@ -7,9 +7,26 @@
     <link rel="stylesheet" href="{% static 'products/website.css' %}">
 
 </head>
+<style>
+    #buy {
+    border: #333 solid 5px;
+    border-radius: 5px;
+    cursor: pointer;
+    background: white;
+    color: #04AA6D;
+
+}
+    #buy a{
+        text-decoration: none;
+
+    }
+    #buy:hover {
+        background: brown;
+    }
+</style>
 <body>
 
-<header><h1>{{ mobile.name }} Details</h1></header>
+<header><h1><a href="{% url 'products:home' %}"> Home Page</a></h1></header>
 <main>
     <div class="details">
 

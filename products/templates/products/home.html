@@ -7,9 +7,22 @@
     <link rel="stylesheet" href="{% static 'products/website.css' %}">
 </head>
 <body>
-<header><h1>Home Page</h1></header>
+<header>
+    <h1>Home Page</h1>
+    <form action="" method="post">
+        {% csrf_token %}
+        {{ price_form.as_p }}
+    <input type="submit" value="Search">
+    </form>
+    <form action="" method="post">
+        {% csrf_token %}
+        {{ category_form.as_p }}
+    <input type="submit" value="Search">
+    </form>
+    <h4 style="right: 0;top: 0;position: fixed"><a href="{% url 'users:login' %}">Login</a> </h4>
+</header>
 <main>
-{% for mobile in page_obj %}
+{% for mobile in list_objects %}
 
 
     <div class="container">

@@ -10,11 +10,11 @@
     
     The guest: who can just see the mobiles
 
-3. Add mobiles under categories 
-4. Listing the topic mobiles in the main page (/, /home), and making paging 10 mobiles on each page (/listing/?page=<int:page_num>)
-5. Listing the mobiles depend on price range - between (a, b) -
-6. Listing the mobiles depend on categories
-7. Make a detail page for each mobile (/mobile/<int:pk>):
+2. Add mobiles under categories 
+3. Listing the topic mobiles in the main page (/, /home), and making paging 10 mobiles on each page (/listing/?page=<int:page_num>)
+4. Listing the mobiles depend on price range - between (a, b) -
+5. Listing the mobiles depend on categories
+6. Make a detail page for each mobile (/mobile/<int:pk>):
     
     a. Show the name, photo, category, price, size and about the mobile
     
@@ -22,5 +22,6 @@
     
     c. Button to let the customer buy the mobile so the amount will decrease by one, the lowest value is zero he can’t buy if the amount is zero 
 
-8. Registration and login pages for the customers  
+7. Registration and login pages for the customers  
+8. Convert between coins
 
