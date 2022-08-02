@@ -1,6 +1,7 @@
 from django.db import models
 
 
+# for mange Category.objects queryset
 class CategoryQuerySet(models.QuerySet):
     def order_by_name(self):
         return self.order_by('name')
@@ -9,6 +10,7 @@ class CategoryQuerySet(models.QuerySet):
         return self.get(category).get_mobiles_by_category()
 
 
+# create our methods for use it as Category.objects.our_function()
 class CategoryManager(models.Manager):
 
     def get_queryset(self):
@@ -39,5 +41,3 @@ class MobileManager(models.Manager):
 
     def list_active_mobiles(self):
         return self.get_queryset().get_filtering_mobiles()
-
-

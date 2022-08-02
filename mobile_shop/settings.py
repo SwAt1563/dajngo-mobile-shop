@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'products.apps.ProductsConfig',
     'users.apps.UsersConfig',
+    'djmoney',  # Produce Money Field for convert between coins
 ]
 
 MIDDLEWARE = [
@@ -73,7 +74,7 @@ WSGI_APPLICATION = 'mobile_shop.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
-
+# ElephantSQL Database
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
@@ -82,27 +83,27 @@ DATABASES = {
         'USER': 'sqbybeaj',
         'PASSWORD': '6P2pgLxnlqL_AHphmmQFPbBqItZLBclq',
         'PORT': '5432',
-        'CONN_MAX_AGE ': 10,  # the time in second for each connection
+        'CONN_MAX_AGE ': 10,  # the time in second for each query connection before delete it from cache
 
     }
 }
 
 # Password validation
 # https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators
-
+# Inactive just cuz fast create user without conditions
 AUTH_PASSWORD_VALIDATORS = [
-    {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
-    },
+    # {
+    #     'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+    # },
+    # {
+    #     'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+    # },
+    # {
+    #     'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
+    # },
+    # {
+    #     'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
+    # },
 ]
 
 # Internationalization
@@ -110,25 +111,36 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
+# you should change it as you country time zone
 TIME_ZONE = 'UTC'
 
 USE_I18N = True
 
 USE_TZ = True
 
-# Static files (CSS, JavaScript, Images)
+# Static files (HTML, CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
 STATIC_URL = 'static/'
 MEDIA_URL = 'media/'
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# AUTH_USER_MODEL = 'users.UserAccount'
-# LOGIN_REDIRECT_URL = "products"
-# LOGOUT_REDIRECT_URL = "products"
+#  For detect the custom user class
+AUTH_USER_MODEL = 'users.UserAccount'
+
+# for redirect pages
+LOGIN_REDIRECT_URL = "products:home"
+LOGOUT_REDIRECT_URL = "products:home"
+
+# money add
+CURRENCIES = ('USD', 'EUR')
+CURRENCY_CHOICES = [('USD', 'USD $'), ('EUR', 'EUR €')]

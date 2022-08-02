@@ -1,32 +1,21 @@
-<!DOCTYPE html>
-<html lang="en">
-{% load static %}
-<head>
-    <meta charset="UTF-8">
-    <title>mobile page</title>
-    <link rel="stylesheet" href="{% static 'products/website.css' %}">
-
-</head>
-<style>
-    #buy {
-    border: #333 solid 5px;
-    border-radius: 5px;
-    cursor: pointer;
-    background: white;
-    color: #04AA6D;
-
-}
-    #buy a{
-        text-decoration: none;
-
-    }
-    #buy:hover {
-        background: brown;
-    }
-</style>
-<body>
+{% extends 'products/base.html' %}
+{% block title %}
+    Mobile Page
+{% endblock %}
+{% block content %}
 
 <header><h1><a href="{% url 'products:home' %}"> Home Page</a></h1></header>
+ {% if user.is_authenticated %}
+        <div style="right: 0;top: 0;position: fixed">
+        <h4><a href="{% url 'users:logout' %}">Logout</a> </h4>
+         {% if not user.type == 'CUSTOMER' %}
+        <h4><a href="{% url 'users:dashboard' %}">Dashboard</a> </h4>
+         {% endif %}
+</div>
+    {% else %}
+            <h4 style="right: 0;top: 0;position: fixed"><a href="{% url 'users:login' %}">Login</a> </h4>
+
+{% endif %}
 <main>
     <div class="details">
 
@@ -40,12 +29,11 @@
         <li><h3>{{ line }}</h3></li>
         {% endfor %}
     </ul>
-    <div id="buy"><a href="#">Buy</a></div>
+    <div id="buy"><a href="{% url 'products:buy_mobile' mobile.id %}">Buy</a></div>
     <img src="{{ mobile.mobile_image.url }}" alt="{{ mobile.name }}"/>
     </div>
 </main>
 <footer>
 
 </footer>
-</body>
-</html>
+{% endblock %}

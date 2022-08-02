@@ -3,6 +3,10 @@ head, body {
     padding: 0;
     background: wheat;
 }
+a {
+    text-decoration: none;
+    color: black;
+}
 header {
     border-bottom: black 1px solid;
     padding-left: 1%;
@@ -40,4 +44,19 @@ footer{
 }
 .pagination {
     font-size: 20px;
+}
+#buy {
+border: #333 solid 5px;
+border-radius: 5px;
+cursor: pointer;
+background: white;
+color: #04AA6D;
+
+}
+#buy a{
+    text-decoration: none;
+
+}
+#buy:hover {
+    background: brown;
 }

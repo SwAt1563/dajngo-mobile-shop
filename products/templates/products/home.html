@@ -1,13 +1,11 @@
-<!DOCTYPE html>
-<html lang="en">
-{% load static %}
-<head>
-    <meta charset="UTF-8">
-    <title>Mobiles Home</title>
-    <link rel="stylesheet" href="{% static 'products/website.css' %}">
-</head>
-<body>
-<header>
+
+{% extends 'products/base.html' %}
+{% block title %}
+    Home
+{% endblock %}
+{% block content %}
+
+   <header>
     <h1>Home Page</h1>
     <form action="" method="post">
         {% csrf_token %}
@@ -19,7 +17,16 @@
         {{ category_form.as_p }}
     <input type="submit" value="Search">
     </form>
-    <h4 style="right: 0;top: 0;position: fixed"><a href="{% url 'users:login' %}">Login</a> </h4>
+    {% if user.is_authenticated %}
+        <div style="right: 0;top: 0;position: fixed">
+        <h4><a href="{% url 'users:logout' %}">Logout</a> </h4>
+        {% if not user.type == 'CUSTOMER' %}
+        <h4><a href="{% url 'users:dashboard' %}">Dashboard</a> </h4>
+         {% endif %}</div>
+    {% else %}
+            <h4 style="right: 0;top: 0;position: fixed"><a href="{% url 'users:login' %}">Login</a> </h4>
+
+{% endif %}
 </header>
 <main>
 {% for mobile in list_objects %}
@@ -38,6 +45,7 @@
     </div>
 
 {% endfor %}
+
 </main>
 <footer>
 <div class="pagination">
@@ -47,9 +55,9 @@
             <a href="?page={{ page_obj.previous_page_number }}">previous</a>
         {% endif %}
 
-        <span class="current">
+        <a href="#" class="current">
             Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
-        </span>
+        </a>
 
         {% if page_obj.has_next %}
             <a href="?page={{ page_obj.next_page_number }}">next</a>
@@ -58,5 +66,5 @@
     </span>
 </div>
 </footer>
-</body>
-</html>
+{% endblock %}
+

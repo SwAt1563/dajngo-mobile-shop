@@ -2,25 +2,17 @@ from django.db import models
 from django.contrib.auth.models import UserManager
 
 
-class OwnerManager(UserManager):
+class UserCustomManger(UserManager):
+    pass
 
-    def get_queryset(self):
-        from .models import UserAccount
-        return super().get_queryset().filter(type=UserAccount.Types.OWNER)
+
+class OwnerManager(UserManager):
+    pass
 
 
 class SellerManager(UserManager):
-
-    def get_queryset(self):
-        from .models import UserAccount
-        return super().get_queryset().filter(type=UserAccount.Types.SELLER)
-
-    def add_mobile(self, seller, mobile):
-        self.get(seller).mobiles.add(mobile)
+    pass
 
 
 class CustomerManager(UserManager):
-
-    def get_queryset(self):
-        from .models import UserAccount
-        return super().get_queryset().filter(type=UserAccount.Types.CUSTOMER)
+    pass

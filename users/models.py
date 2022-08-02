@@ -1,90 +1,73 @@
 from django.db import models
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, AbstractUser
 from .managers import OwnerManager
 from .managers import SellerManager
 from .managers import CustomerManager
+from .managers import UserCustomManger
+from django.conf import settings
+from djmoney.models.fields import MoneyField
+from djmoney.money import Money
 
 
 # Create your models here.
 
-# https://www.youtube.com/watch?v=f0hdXr2MOEA
-# https://docs.djangoproject.com/en/4.1/topics/auth/default/#how-to-log-a-user-out
-class UserAccount(User):
-    is_superuser = False
-    is_active = False
-    is_staff = False
-
+class UserAccount(AbstractUser):
     class Types(models.TextChoices):
+        ADMIN = "ADMIN", "Admin"
         OWNER = "OWNER", "Owner"
         SELLER = "SELLER", "Seller"
         CUSTOMER = "CUSTOMER", "Customer"
 
     type = models.CharField(max_length=15, choices=Types.choices,
-                            default=Types.CUSTOMER)
+                            default=Types.ADMIN)
+
+    objects = UserCustomManger()
+
 
     # There is email and username and other field by default
     # but at least you should fill the username and the password
 
 
-class Owner(UserAccount):
+class Owner(models.Model):
     objects = OwnerManager()
+    account = models.OneToOneField(settings.AUTH_USER_MODEL,
+                                   on_delete=models.CASCADE,
+                                   )
 
-    class Meta:
-        proxy = False  # IF TRUE: then don't create new table, and use the User table
-        permissions = [
-            ("add_mobile", "add mobile"),
-            ("delete_mobile", "delete mobile"),
-            ("update_mobile", "update mobile"),
-            ("show_mobile", "show mobile"),
-            ("inactive_mobile", "inactive mobile"),
-        ]
+    def __str__(self):
+        return self.account.username
 
-    # Owner.objects.create(username="x", email="y")
-    # instead of
-    # Owner.objects.create(username="x", email="y", type=User.Types.OWNER)
-    def save(self, *args, **kwargs):
-        if not self.pk:
-            self.type = UserAccount.Types.OWNER
-        return super().save(*args, **kwargs)
+    def get_owner_mobiles(self):
+        return self.mobile_set.select_related('owner').all()
 
 
-class Seller(UserAccount):
-
+class Seller(models.Model):
     objects = SellerManager()
     mobiles = models.ManyToManyField(to='products.Mobile', blank=True, default=None)
+    account = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    # THE OWNER CAN JUST HAS ONE SELLER
+    owner = models.OneToOneField(Owner, on_delete=models.CASCADE)
 
-    class Meta:
-        proxy = False
-        permissions = [
-            ("show_mobile", "show mobile"),
-            ("inactive_mobile", "inactive mobile"),
-        ]
-
-    def save(self, *args, **kwargs):
-        if not self.pk:
-            self.type = UserAccount.Types.SELLER
-        return super().save(*args, **kwargs)
+    def __str__(self):
+        return self.account.username
 
 
-class Customer(UserAccount):
-
+class Customer(models.Model):
     objects = CustomerManager()
     purchases = models.ManyToManyField(to='products.Mobile', blank=True, default=None)
-    wallet = models.FloatField(default=1000.0)
+    wallet = MoneyField(
+        max_digits=19,
+        decimal_places=4,
+        default_currency='USD',
+        default=Money(1000, 'USD'),
+    )
 
-    class Meta:
-        proxy = False
-        permissions = [
-            ("buy_mobile", "buy mobile"),
-            ("show_mobile", "show mobile"),
-        ]
+    account = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.account.username
 
     def buy_mobile(self, mobile):
         self.wallet -= mobile.price
         self.purchases.add(mobile)
         self.save()
-
-    def save(self, *args, **kwargs):
-        if not self.pk:
-            self.type = UserAccount.Types.CUSTOMER
-        return super().save(*args, **kwargs)

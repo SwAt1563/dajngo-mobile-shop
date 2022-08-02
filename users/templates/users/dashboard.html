@@ -1,32 +1,99 @@
-<!DOCTYPE html>
-<html lang="en">
-{% load static %}
-<head>
-    <meta charset="UTF-8">
-    <title>dashboard</title>
-    <link rel="stylesheet" href="{% static 'products/website.css' %}">
 
-</head>
-<body>
+{% extends 'users/base.html' %}
+{% block title %}
+    Dashboard
+{% endblock %}
+{% block content %}
+{% load static %}
 <header>
 <h1><a href="{% url 'products:home' %}">Home Page</a> </h1>
+
+    {% if user.is_authenticated %}
+        <h4 style="right: 0;top: 0;position: fixed"><a href="{% url 'users:logout' %}">Logout</a> </h4>
+{% endif %}
     </header>
 <main>
     <table>
         <thead>
         <tr>
-            <th>Image</th>
+
             <th>Name</th>
             <th>Amount</th>
+            <th>Size</th>
             <th>Price</th>
-            <th>Is Active</th>
+            <th>Category</th>
+            <th>Status</th>
+            <th>Active/Inactive</th>
+             {% if user.type == 'OWNER' %}
+            <th>Delete</th>
+            {% endif %}
         </tr>
         </thead>
-        <tbody></tbody>
-    </table>
-</main>
-<footer>
+        <tbody>
+        {% for mobile in list_mobiles %}
+            <tr>
 
+        <td>{{ mobile.name }}</td>
+        <td>{{ mobile.size }}</td>
+        <td>{{ mobile.price }}</td>
+        <td>{{ mobile.category }}</td>
+        <td>{{ mobile.amount }}</td>
+        <td>{{ mobile.is_active }}</td>
+        <td>
+            <a href="{% url 'users:mobile_status' mobile.id %}">
+            <img style="width: 25px;height: 25px"
+                 {% if mobile.is_active %}
+                 src="{% static 'users/icons/disable.png' %}"
+                 title="Inactive"
+                 {% else %}
+                 src="{% static 'users/icons/true.png' %}"
+                 title="Active"
+                 {% endif %}
+                 alt="Disable" />
+        </a>
+        </td>
+
+        {% if user.type == 'OWNER' %}
+            <td>
+         <a href="{% url 'users:delete_mobile' mobile.id %}">
+            <img style="width: 25px;height: 25px"  src="{% static 'users/icons/delete.png' %}" alt="Delete"/>
+        </a>
+            </td>
+        {% endif %}
+            </tr>
+        {% endfor %}
+
+        </tbody>
+    </table>
+ {% if user.type == 'OWNER' %}
+    <h4><a href="{% url 'users:add_mobile' %}"><button >Add Mobile</button> </a> </h4>
+
+     {% if not user.owner.seller %}
+      <h4><a href="{% url 'users:add_seller' %}"><button >Add Seller</button> </a> </h4>
+            {% endif %}
+{% endif %}
+
+
+
+</main>
+
+<footer>
+<div class="pagination">
+    <span class="step-links">
+        {% if page_obj.has_previous %}
+            <a href="?page=1">&laquo; first</a>
+            <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+        {% endif %}
+
+        <a href="#" class="current">
+            Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
+        </a>
+
+        {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}">next</a>
+            <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+        {% endif %}
+    </span>
+</div>
 </footer>
-</body>
-</html>
+{% endblock %}
