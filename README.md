@@ -1,27 +1,87 @@
-**The requirements:**
+##The Requirements
 
-1. There are four roles:
+1. ### The User Requirements
 
-    The owner: who can add, delete, filtering, update, show and delete the mobiles
+   - The website should have `three roles` for user instead of than guest
+     1. Owner
+         - `Add` his mobiles on the website
+         - `Show` his mobiles
+         - `Delete` his mobiles on the website
+         - `Active/Inactive` his own mobiles
+         - `Add a Seller` for access some of his mobiles 
+         - `Show all the listed mobiles` in the home page
+         - `Filtering the listed mobiles` in the home page
+     2. Seller
+         - `Active/Inactive the available` owner mobiles 
+         - `Show all the listed mobiles` in the home page
+         - `Filtering the listed mobiles` in the home 
+     3. Customer 
+         - `Buy mobiles 
+         - `Show all the listed mobiles` in the home page
+         - `Filtering the listed mobiles` in the home
+     4. Guest
+        - `Show all the listed mobiles` in the home page
+        - `Filtering the listed mobiles` in the home
 
-    The seller: who can show and filtering the mobiles, and make inactive for mobiles
-    
-    The customer: who can buy the available mobiles 
-    
-    The guest: who can just see the mobiles
+   - There is `login` page for Owner, Seller and Customer
+   - There is `registration` page for create Owner or Customer account
+   - Create Seller account by the owner `each owner just has one seller`
+   - The user can `change his own password`
+   - The user can `filtering the mobiles` in the home page depend on
+      - Price `List the mobiles in range minimum price and maximum price`
+      - Category `List all mobiles under this category`
+         ```
+               X: M1, M2
+               | > Y: M3, M4 
+               | > Z: M5, M6
+     
+          Here there is category 'X' has M1, M2 mobiles under it
+          also it has two subcategory under it Y, Z which have its own mobiles (M3, M4, M5, M6)
+          so when filter by category 'X' we should list all the mobiles on level 'X' and its childrens
+          then the result is (M1, M2, M3, M4, M5, M6)
+            
+         ```
+   - Each mobile should have its own `mobile detail page`
+   - The customer can `buy any mobile` available in the home page under some conditions
+     1. The money in the customer wallet bigger than the mobile price
+     2. The amount of a mobile is one or more 
+   - The mobile should be Inactive when the amount is zero `especially when the customer buy all the amount of that mobile `
+   - The mobiles should be listed in `pagging` for scroll between them not just one page for all mobiles
+   - The user can `logout` from his account
 
-2. Add mobiles under categories 
-3. Listing the topic mobiles in the main page (/, /home), and making paging 10 mobiles on each page (/listing/?page=<int:page_num>)
-4. Listing the mobiles depend on price range - between (a, b) -
-5. Listing the mobiles depend on categories
-6. Make a detail page for each mobile (/mobile/<int:pk>):
-    
-    a. Show the name, photo, category, price, size and about the mobile
-    
-    b. Box for show the amount of the available mobiles   
-    
-    c. Button to let the customer buy the mobile so the amount will decrease by one, the lowest value is zero he can’t buy if the amount is zero 
+2. ###System Requirements
+   
+   - Create python virtual environments
+        ```
+            python -m venv myenv
+        ```
+   - Create the requirements.txt file
+        ```
+        asgiref==3.5.2
+        Babel==2.10.3
+        Django==4.0.6
+        django-money==3.0.0
+        Pillow==9.2.0
+        psycopg2==2.9.3
+        py-moneyed==2.0
+        pytz==2022.1
+        sqlparse==0.4.2
+        typing-extensions==4.3.0
+        tzdata==2022.1
+        ```
+   - Create Django project
+        ```
+        django-admin startproject mysite
+        ```
+     - Create products app
+        ```
+        python manage.py startapp products
+        ```
+     - Create users app
+        ```
+        python manage.py startapp users
+        ```
+   - Create the Dockerfile `optional`
 
-7. Registration and login pages for the customers  
-8. Convert between coins
+
 

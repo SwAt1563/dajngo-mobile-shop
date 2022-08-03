@@ -18,10 +18,14 @@
         <tr>
 
             <th>Name</th>
-            <th>Amount</th>
             <th>Size</th>
             <th>Price</th>
             <th>Category</th>
+            <th>Amount</th>
+
+
+
+
             <th>Status</th>
             <th>Active/Inactive</th>
              {% if user.type == 'OWNER' %}
@@ -36,7 +40,7 @@
         <td>{{ mobile.name }}</td>
         <td>{{ mobile.size }}</td>
         <td>{{ mobile.price }}</td>
-        <td>{{ mobile.category }}</td>
+        <td>{{ mobile.category.name }}</td>
         <td>{{ mobile.amount }}</td>
         <td>{{ mobile.is_active }}</td>
         <td>

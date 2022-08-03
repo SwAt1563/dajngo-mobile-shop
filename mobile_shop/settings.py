@@ -141,6 +141,6 @@ AUTH_USER_MODEL = 'users.UserAccount'
 LOGIN_REDIRECT_URL = "products:home"
 LOGOUT_REDIRECT_URL = "products:home"
 
-# money add
+# money app
 CURRENCIES = ('USD', 'EUR')
 CURRENCY_CHOICES = [('USD', 'USD $'), ('EUR', 'EUR €')]
