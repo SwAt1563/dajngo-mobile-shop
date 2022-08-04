@@ -71,7 +71,7 @@
         ```
    - Create Django project
         ```
-        django-admin startproject mysite
+        django-admin startproject mobile_shop
         ```
      - Create products app
         ```
