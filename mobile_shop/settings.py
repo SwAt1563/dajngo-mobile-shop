@@ -36,8 +36,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
     'products.apps.ProductsConfig',
     'users.apps.UsersConfig',
+
     'djmoney',  # Produce Money Field for convert between coins
 ]
 
@@ -126,6 +128,7 @@ MEDIA_URL = 'media/'
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+
 
 
 

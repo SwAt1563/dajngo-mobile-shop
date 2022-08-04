@@ -16,7 +16,7 @@
          - `Show all the listed mobiles` in the home page
          - `Filtering the listed mobiles` in the home 
      3. Customer 
-         - `Buy mobiles 
+         - `Buy mobiles` 
          - `Show all the listed mobiles` in the home page
          - `Filtering the listed mobiles` in the home
      4. Guest

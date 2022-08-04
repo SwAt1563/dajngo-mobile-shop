@@ -1,7 +1,6 @@
 from django import forms
 from .models import Category
 
-
 # Custom form for search about mobiles depend on price
 class PriceForm(forms.Form):
     minimum = forms.FloatField()
