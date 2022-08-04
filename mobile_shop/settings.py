@@ -30,15 +30,15 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'products.apps.ProductsConfig',
+    'users.apps.UsersConfig',  # it should be upper .auth app, for override it templates
+
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-
-    'products.apps.ProductsConfig',
-    'users.apps.UsersConfig',
 
     'djmoney',  # Produce Money Field for convert between coins
 ]
