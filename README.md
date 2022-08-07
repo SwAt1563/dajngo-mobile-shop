@@ -1,4 +1,4 @@
-##The Requirements
+## The Requirements
 
 1. ### The User Requirements
 
@@ -49,13 +49,14 @@
    - The mobiles should be listed in `pagging` for scroll between them not just one page for all mobiles
    - The user can `logout` from his account
 
-2. ###System Requirements
+2. ### System Requirements
    
-   - Create python virtual environments
+   - Clone the repository 
+   - Create python virtual environments on the same level of manage.py file
         ```
-            python -m venv myenv
+        python -m venv myenv
         ```
-   - Create the requirements.txt file
+   - Create the requirements.txt file on the same level of manage.py file if not exist
         ```
         asgiref==3.5.2
         Babel==2.10.3
@@ -69,19 +70,20 @@
         typing-extensions==4.3.0
         tzdata==2022.1
         ```
-   - Create Django project
+   - run this command in the terminal  
         ```
-        django-admin startproject mobile_shop
-        ```
-     - Create products app
-        ```
-        python manage.py startapp products
-        ```
-     - Create users app
-        ```
-        python manage.py startapp users
+        pip install -r requirements.txt
         ```
    - Create the Dockerfile `optional`
+   - You can use this command for create user on your administration page
+        ```
+        python manage.py createsuperuser
+        ```
+   - Run this command for open the server connection on localhost
+        ```
+        python manage.py runserver
+        ```
+   
 
 
 
